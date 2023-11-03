@@ -1,21 +1,21 @@
-import { useState } from 'react';
+
 import './App.css';
-import { Create } from './Create';
+import { Form } from './Form';
 import { Header } from './Header';
 
-const newNoteObject = {
-  title: '',
+const emptyValue = {
+  title: 'ddd',
   url: '',
-  note: '',
+  note: 'ggg',
 };
 
 function App() {
-  const [nextId, setNextID] = useState(0);
+
 
   return (
     <div>
       <Header />
-      <Create data={newNoteObject} nextId={nextId} />
+      <Form values={emptyValue} />
     </div>
   );
 }
