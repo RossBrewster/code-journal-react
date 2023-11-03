@@ -13,7 +13,7 @@ type Props = {
 export function Create({data, nextId}:Props) {
   return (
     <form>
-      <label>
+      <label >
         <input name='title' type='text' value={data.title}/>
       </label>
       <label>
