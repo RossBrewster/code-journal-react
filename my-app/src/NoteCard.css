@@ -4,13 +4,12 @@
 }
 
 .column-half {
-  display: flex;
-  flex-direction: column;
-  flex-basis: 45%;
 }
 
 .column-full {
   display: flex;
+  max-width: 800px;
+  width:100%;
 }
 
 .image {

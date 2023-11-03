@@ -1,5 +1,5 @@
 import placeholder from './images/placeholder-image-square.jpg';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import './Create.css';
 import { data } from './data.ts';
 
@@ -10,45 +10,42 @@ type Props = {
     note: string;
     id?: number;
   };
+  onClick: () => void;
 };
 
 type Sub = {
   title: string;
   url: string;
   note: string;
-  id?: number;
+  id: number;
 };
 
-export function Form({ values }: Props) {
+export function Form({ values, onClick }: Props) {
   const [title, setTitle] = useState(values.title);
   const [url, setUrl] = useState(values.url);
   const [note, setNote] = useState(values.note);
 
-  function handleSumbit(event) {
+  function handleSubmit(event: FormEvent) {
     event.preventDefault();
     console.log('data', data);
     const submission: Sub = {
       title: title,
       url: url,
       note: note,
+      id: values.id ?? 0
     };
 
     if (values.id === undefined) {
       submission.id = data.nextEntryId;
-    } else {
-      submission.id = values.id;
-    }
-
-    if (submission.id === data.nextEntryId) {
       data.entries.push(submission);
+      data.nextEntryId++;
     }
-
-    data.nextEntryId++;
+    onClick()
   }
 
   return (
     <div className="wrapper">
-      <form id="entry-form">
+      <form id="entry-form" onSubmit={handleSubmit}>
         <div className="row">
           <div className="half-column">
             <img className="image" src={url ? url : placeholder} />
@@ -91,9 +88,6 @@ export function Form({ values }: Props) {
         </div>
         <div className="button-wrapper">
           <button
-            onClick={(event) => {
-              handleSumbit(event);
-            }}
             className="submit"
             type="submit">
             Save
