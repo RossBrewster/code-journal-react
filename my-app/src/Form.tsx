@@ -1,67 +1,78 @@
 import placeholder from './images/placeholder-image-square.jpg';
-import "./data.ts"
-import {useState} from "react";
+import { useState } from 'react';
 import './Create.css';
+import { data } from './data.ts';
 
-
-type Props =
-{
+type Props = {
   values: {
     title: string;
     url: string;
     note: string;
     id?: number;
-  }
-}
+  };
+};
 
 type Sub = {
   title: string;
   url: string;
   note: string;
   id?: number;
-}
+};
 
-export function Form({values}: Props) {
+export function Form({ values }: Props) {
+  const [title, setTitle] = useState(values.title);
+  const [url, setUrl] = useState(values.url);
+  const [note, setNote] = useState(values.note);
 
-  const [title, setTitle] = useState(values.title)
-  const [url, setUrl] = useState(values.url)
-  const [note, setNote] = useState(values.note)
-
-
-
-  function handleSumbit() {
+  function handleSumbit(event) {
+    event.preventDefault();
+    console.log('data', data);
     const submission: Sub = {
       title: title,
       url: url,
       note: note,
-    }
+    };
 
     if (values.id === undefined) {
-      submission.id = data.nextEntryId
-    } else { submission.id = values.id}
+      submission.id = data.nextEntryId;
+    } else {
+      submission.id = values.id;
+    }
 
     if (submission.id === data.nextEntryId) {
-      data.entries.push(submission)
+      data.entries.push(submission);
     }
+
+    data.nextEntryId++;
   }
-
-
 
   return (
     <div className="wrapper">
       <form id="entry-form">
         <div className="row">
           <div className="half-column">
-            <img className="image" src={ url? url: placeholder} />
+            <img className="image" src={url ? url : placeholder} />
           </div>
           <div className="half-column">
             <label>
               Title
-              <input required name="title" type="text" value={title} onChange={(e) => setTitle(e.currentTarget.value)}/>
+              <input
+                required
+                name="title"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.currentTarget.value)}
+              />
             </label>
             <label>
               Photo URL
-              <input required name="URL" type="url" value={url} onChange={(e)=> setUrl(e.currentTarget.value)}/>
+              <input
+                required
+                name="URL"
+                type="url"
+                value={url}
+                onChange={(e) => setUrl(e.currentTarget.value)}
+              />
             </label>
           </div>
         </div>
@@ -79,7 +90,12 @@ export function Form({values}: Props) {
           </label>
         </div>
         <div className="button-wrapper">
-          <button onClick={handleSumbit} className="submit" type="submit">
+          <button
+            onClick={(event) => {
+              handleSumbit(event);
+            }}
+            className="submit"
+            type="submit">
             Save
           </button>
         </div>

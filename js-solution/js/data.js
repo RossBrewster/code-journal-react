@@ -1,13 +1,6 @@
 /* exported data */
 
-type Data = {
-  view: string;
-  entries: object[];
-  editing: null;
-  nextEntryId: number;
-};
-
-export let data: Data = {
+let data = {
   view: 'entry-form',
   entries: [],
   editing: null,
